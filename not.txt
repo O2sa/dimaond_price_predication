@@ -1,0 +1,123 @@
+Content price price in US dollars ( 326−−
+ 18,823)
+
+carat weight of the diamond (0.2--5.01)
+
+cut quality of the cut (Fair, Good, Very Good, Premium, Ideal)
+
+color diamond colour, from J (worst) to D (best)
+
+clarity a measurement of how clear the diamond is (I1 (worst), SI2, SI1, VS2, VS1, VVS2, VVS1, IF (best))
+
+x length in mm (0--10.74)
+
+y width in mm (0--58.9)
+
+z depth in mm (0--31.8)
+
+depth total depth percentage = z / mean(x, y) = 2 * z / (x + y) (43--79)
+
+table width of top of diamond relative to widest point (43--95)
+
+This is the range of values assumed for each numerical feature:
+- Price ( 326−18,823)
+- carat (0.2-5.01)
+- X (0-10.74)
+- y (0-58.9)
+- z (0-31.8)
+- depth (43--79)
+- table (43-95)
+
+
+
+
+
+I have a dataset of diamonds with this Feature description:
+
+- price price in US dollars This is the target column containing tags for the features. 
+
+The 4 Cs of Diamonds:-
+
+- carat The carat is the diamond’s physical weight measured in metric carats.  One carat equals 1/5 gram and is subdivided into 100 points. Carat weight is the most objective grade of the 4Cs. 
+
+- cut (Fair, Good, Very Good, Premium, Ideal) In determining the quality of the cut, the diamond grader evaluates the cutter’s skill in the fashioning of the diamond. The more precise the diamond is cut, the more captivating the diamond is to the eye.  
+
+- color, from J (worst) to D (best) The colour of gem-quality diamonds occurs in many hues. In the range from colourless to light yellow or light brown. Colourless diamonds are the rarest. Other natural colours (blue, red, pink for example) are known as "fancy,” and their colour grading is different than from white colorless diamonds.  
+
+- clarity (I1 (worst), SI2, SI1, VS2, VS1, VVS2, VVS1, IF (best)) Diamonds can have internal characteristics known as inclusions or external characteristics known as blemishes. Diamonds without inclusions or blemishes are rare; however, most characteristics can only be seen with magnification.  
+
+Dimensions
+- x length 
+- y width 
+- z depth 
+
+And This is the range of values assumed for each numerical feature:
+- Price ( 326−18,823)
+- carat (0.2-5.01)
+- X (0-10.74)
+- y (0-58.9)
+- z (0-31.8)
+- depth (43--79)
+- table (43-95)
+
+
+And I want to perform these operations on the previous data:
+1 - cleaning the data using various cleaning methods and remove outliers, while clarifying the structure of the data before and after cleaning using visual charts (if possible).
+3 - Analyze data using visual charts in different ways, explaining the types of machine learning that work with the data
+4 - Train the machine on previous data using different algorithms
+5 - Compare the accuracy of each algorithm in the previous process and choose the best accuracy to build a diamond price prediction model and test it
+
+## can you give me the python code for these operations?
+
+
+
+
+
+- I got this error:
+---------------------------------------------------------------------------
+IndexError                                Traceback (most recent call last)
+Cell In[37], line 17
+     15     ax[x,y].yaxis.label.set_size(15)
+     16 else:
+---> 17     sns.boxplot(data=data, x=col, y='price', ax=ax[x,y])
+     18     ax[x,y].xaxis.label.set_size(15)
+     19     ax[x,y].yaxis.label.set_size(15)
+
+IndexError: index 3 is out of bounds for axis 0 with size 3
+
+
+- when tring to running this code:
+
+#Code to find the outliers in each column and draw them as graph
+sns.set_style('darkgrid')
+colors = ['#0055ff', '#ff7000', '#23bf00']
+CustomPalette = sns.set_palette(sns.color_palette(colors))
+
+OrderedCols = np.concatenate([data.select_dtypes(exclude='object').columns.values,  data.select_dtypes(include='object').columns.values])
+
+fig, ax = plt.subplots(3, 3, figsize=(15,7),dpi=100)
+
+for i,col in enumerate(OrderedCols):
+    x = i//3
+    y = i%3
+    if i<5:
+        sns.boxplot(data=data, y=col, ax=ax[x,y])
+        ax[x,y].yaxis.label.set_size(15)
+    else:
+        sns.boxplot(data=data, x=col, y='price', ax=ax[x,y])
+        ax[x,y].xaxis.label.set_size(15)
+        ax[x,y].yaxis.label.set_size(15)
+
+plt.tight_layout()    
+plt.show()
+
+
+
+cv_results_rms = []
+for i, model in enumerate(pipelines):
+    cv_score = cross_val_score(model, X_train,y_train,scoring="neg_root_mean_squared_error", cv=10)
+    cv_results_rms.append(cv_score)
+    print("%s: %f " % (pipe_dict[i], cv_score.mean()))
+
+
+- How i can change this code to get the scoring of theis metrics(MSE, R2, MAE, RMSE)
